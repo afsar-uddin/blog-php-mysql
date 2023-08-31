@@ -15,7 +15,7 @@
             <label for="remember">Remember Me</label> <br />
             <input type="submit" value="Login">
 
-            <p>Don't have an account? <a href="signup.php">Login Here</a></p>
+            <p>Don't have an account? <a href="signup">Login Here</a></p>
         </form>
     </div>
     <script src="../public/assets/js/jquery.min.js"></script>

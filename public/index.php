@@ -14,10 +14,10 @@ if(file_exists($filename)) {
 
 
 // echo $url;
-echo "<pre>";
-print_r($url);
-echo "</pre>";
+// echo "<pre>";
+// print_r($url);
+// echo "</pre>";
 
-echo $filename;
+// echo $filename;
 
 // echo "home page";

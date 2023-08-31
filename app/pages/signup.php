@@ -17,7 +17,7 @@
             <label for="remember">Accept terms and conditions.</label> <br />
             <input type="submit" value="Signup">
 
-            <p>Already have an account? <a href="login.php">Sign Here</a></p>
+            <p>Already have an account? <a href="login">Sign Here</a></p>
         </form>
     </div>
 
