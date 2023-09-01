@@ -1,4 +1,5 @@
 <?php
+require "../app/core/init.php";
 
 $url = $_GET['url'] ?? 'Home';
 $url = explode('/', $url);
@@ -21,3 +22,11 @@ if(file_exists($filename)) {
 // echo $filename;
 
 // echo "home page";
+
+
+/**
+ * TABLES
+ *  users [ id, username, email, password, image, date, role ]
+ *  categories [ id, category, slug, disabled ]
+ *  posts [ id, user_id, category_id, title, content, image, date, slug ]
+ * */

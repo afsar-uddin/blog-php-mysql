@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Blog</title>
-    <link rel="stylesheet" href="../public/assets/css/bootstrap.min.css">
+    <title>Login | <?=APP_NAME?></title>
+    <link rel="stylesheet" href="<?=ROOT ?>/assets/css/bootstrap.min.css">
 </head>
 <body>
     <div class="nwt-login">
@@ -21,7 +21,7 @@
         </form>
     </div>
 
-    <script src="../public/assets/js/jquery.min.js"></script>
-    <script src="../public/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="<?=ROOT ?>/assets/js/jquery.min.js"></script>
+    <script src="<?=ROOT ?>/assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

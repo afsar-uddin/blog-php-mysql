@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.104.2">
-    <title>Dashboard Template · Bootstrap v5.2</title>
+    <title>Dashboard | <?=APP_NAME?></title>
 
     <link rel="canonical" href="index.html">
 
@@ -28,8 +28,8 @@
 <link rel="icon" href="https://getbootstrap.com/docs/5.2/assets/img/favicons/favicon.ico">
 <meta name="theme-color" content="#712cf9">
 
-<link rel="stylesheet" href="../public/assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="../public/assets/css/dashboard.css">
+<link rel="stylesheet" href="<?=ROOT ?>/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="<?=ROOT ?>/assets/css/dashboard.css">
 
 
     <style>
@@ -146,8 +146,8 @@
   </div>
 </div>
 
-      <script src="../public/assets/js/jquery.min.js"></script>
-    <script src="../public/assets/js/bootstrap.bundle.min.js"></script>
-    <script src="../public/assets/js/dashboard.js"></script>
+      <script src="<?=ROOT ?>/assets/js/jquery.min.js"></script>
+    <script src="<?=ROOT ?>/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="<?=ROOT ?>/assets/js/dashboard.js"></script>
   </body>
 </html>
