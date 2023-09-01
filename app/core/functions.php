@@ -1,8 +1,8 @@
 <?php
 
 function query(string $query, array $data = []) {
-    $string = "mysql:hostname=".DBHOST.";";
-    $con = new PDO ($string, DBUSER, DBPASS);
+    $string = "mysql:hostname=".DBHOST.";dbname=".DBNAME;
+    $con = new PDO($string, DBUSER, DBPASS);
 
     $stm = $con->prepare($query);
     $stm->execute($data);
@@ -12,6 +12,38 @@ function query(string $query, array $data = []) {
         return $result; 
     }
     return false;
+}
+
+function redirect($page) {
+    header('Location: '.$page);
+    die();
+}
+
+function old_value($key) {
+    if(!empty($_POST[$key])) {
+        return $_POST[$key];
+    }
+
+    return "";
+}
+
+function old_checked($key) {
+    if(!empty($_POST[$key])) {
+        return "checked";
+    }
+
+    return "";
+}
+
+function authenticate($row) {
+    $_SESSION['USER'] = $row;
+}
+
+function logged_in() {
+   if(!empty($_SESSION['USER']))
+        return true;
+        
+   return false;
 }
 
 create_table();
