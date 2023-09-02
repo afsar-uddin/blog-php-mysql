@@ -27,7 +27,7 @@
         if(empty($_POST['password'])) {
             $errors['password'] = 'Password is required';
         } else if (strlen($_POST['password']) < 4) {
-            $errors['password'] = 'Password must be 4 characters loginer or more';
+            $errors['password'] = 'Password must be 4 characters longer or more';
         } else if ($_POST['password'] !== $_POST['cpassword']) {
             $errors['password'] = 'Password do not matched';
         }

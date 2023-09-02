@@ -1,3 +1,9 @@
+<?php
+    if(!logged_in()) {
+      redirect('login');
+    }
+?>
+
 <!doctype html>
 <html lang="en">
   
@@ -110,15 +116,27 @@
       <div class="position-sticky pt-3 sidebar-sticky">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">
+            <a class="nav-link active" aria-current="page" href="<?=ROOT?>/admin">
               <span data-feather="home" class="align-text-bottom"></span>
               Dashboard
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="<?=ROOT?>/admin/users">
               <span data-feather="file" class="align-text-bottom"></span>
-              Front End
+              Users
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?=ROOT?>/admin/categories">
+              <span data-feather="file" class="align-text-bottom"></span>
+              Categories
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?=ROOT?>/admin/posts">
+              <span data-feather="file" class="align-text-bottom"></span>
+              Posts
             </a>
           </li>
         </ul>
@@ -140,7 +158,19 @@
         </div>
       </div>
 
-      <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+      <div class="content-area">
+        <?php
+          $section = $url[1] ?? 'dashboard';
+          
+          $filename = "../app/pages/admin/".$section.".php";
+
+          if(file_exists($filename)) {
+            require_once $filename;
+          } else {
+            require_once "../app/pages/admin/404.php";
+          }
+        ?>
+      </div>
 
     </main>
   </div>

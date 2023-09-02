@@ -1,5 +1,60 @@
 <?php
 
+/**clean html load */
+function esc($str) {
+    return htmlspecialchars($str ?? '');
+}
+
+/**String to url to create slug */
+function str_to_url($url) {
+   $url = str_replace("'", "", $url);
+   $url = preg_replace('~[^\\pL0-9_]+~u', '-', $url);
+   $url = trim($url, "-");
+   $url = iconv("utf-8", "us-ascii//TRANSLIT", $url);
+   $url = strtolower($url);
+   $url = preg_replace('~[^-a-z0-9_]+~', '', $url);
+   
+   return $url;
+}
+
+/**Redirect page */
+function redirect($page) {
+    header('Location: '.$page);
+    die();
+}
+
+/** Hold immediate old value in field */
+function old_value($key) {
+    if(!empty($_POST[$key])) {
+        return $_POST[$key];
+    }
+
+    return "";
+}
+
+/** Hold checked */
+function old_checked($key) {
+    if(!empty($_POST[$key])) {
+        return "checked";
+    }
+
+    return "";
+}
+
+/** Session */
+function authenticate($row) {
+    $_SESSION['USER'] = $row;
+}
+
+/** Session for logged in users */
+function logged_in() {
+   if(!empty($_SESSION['USER']))
+        return true;
+        
+   return false;
+}
+
+/** Dynamically data insert query */
 function query(string $query, array $data = []) {
     $string = "mysql:hostname=".DBHOST.";dbname=".DBNAME;
     $con = new PDO($string, DBUSER, DBPASS);
@@ -14,38 +69,7 @@ function query(string $query, array $data = []) {
     return false;
 }
 
-function redirect($page) {
-    header('Location: '.$page);
-    die();
-}
-
-function old_value($key) {
-    if(!empty($_POST[$key])) {
-        return $_POST[$key];
-    }
-
-    return "";
-}
-
-function old_checked($key) {
-    if(!empty($_POST[$key])) {
-        return "checked";
-    }
-
-    return "";
-}
-
-function authenticate($row) {
-    $_SESSION['USER'] = $row;
-}
-
-function logged_in() {
-   if(!empty($_SESSION['USER']))
-        return true;
-        
-   return false;
-}
-
+/**Create tables */
 create_table();
 function create_table() {
     $string = "mysql:hostname=".DBHOST.";";
