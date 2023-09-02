@@ -19,21 +19,21 @@ function str_to_url($url) {
 
 /**Redirect page */
 function redirect($page) {
-    header('Location: '.$page);
+    header('Location: '.ROOT.'/'.$page);
     die();
 }
 
 /** Hold immediate old value in field */
-function old_value($key) {
+function old_value($key, $default = '') {
     if(!empty($_POST[$key])) {
         return $_POST[$key];
     }
 
-    return "";
+    return $default;
 }
 
 /** Hold checked */
-function old_checked($key) {
+function old_checked($key, $default = '') {
     if(!empty($_POST[$key])) {
         return "checked";
     }
@@ -54,7 +54,7 @@ function logged_in() {
    return false;
 }
 
-/** Dynamically data insert query */
+/** Dynamically data query */
 function query(string $query, array $data = []) {
     $string = "mysql:hostname=".DBHOST.";dbname=".DBNAME;
     $con = new PDO($string, DBUSER, DBPASS);
@@ -65,6 +65,20 @@ function query(string $query, array $data = []) {
     $result = $stm->fetchAll(PDO::FETCH_ASSOC);
     if(is_array($result) && !empty($result)) {
         return $result; 
+    }
+    return false;
+}
+
+function query_row(string $query, array $data = []) {
+    $string = "mysql:hostname=".DBHOST.";dbname=".DBNAME;
+    $con = new PDO($string, DBUSER, DBPASS);
+
+    $stm = $con->prepare($query);
+    $stm->execute($data);
+
+    $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+    if(is_array($result) && !empty($result)) {
+        return $result[0]; 
     }
     return false;
 }
