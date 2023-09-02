@@ -64,7 +64,33 @@
         </form>
     </div>
 <?php elseif($action == "delete"): ?>
+    <div class="col-md-6 mx-auto add-users"> 
+        <form method="post" class="form">
+            <h4>Delete Account</h4>
+            
+            <?php //var_dump($row); ?>
+            
+            <?php if(!empty($row)) : ?>
 
+            <?php if(!empty($errors)): ?>
+                <div style="color: red" class="bg-warning">Please fixed the error bellow</div>
+            <?php endif; ?>
+            
+            <div class="bg-danger p-3">
+                <div><?=old_value('username', $row['username'])?></div>
+                <div><?=old_value('email', $row['email'])?></div>
+            </div>
+
+            <br><br>
+            
+            <a href="<?=ROOT?>/admin/users" class="btn btn-success">Back</a>
+            <input class="btn btn-danger"  type="submit" value="Delete">
+            
+            <?php else: ?>
+                <div class="alert alert-danger text-center">Record not found</div>
+            <?php endif; ?>
+        </form>
+    </div>
 <?php else: ?>
 
 
