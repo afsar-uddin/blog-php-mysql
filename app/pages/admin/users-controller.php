@@ -90,22 +90,53 @@
             } else if ($_POST['password'] !== $_POST['cpassword']) {
                 $errors['password'] = 'Password do not matched';
             }
-    
+
+            /**validate image */
+            $format_allowed = ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'];
+            if(!empty($_FILES['image']['name'])) {
+                $destination = '';
+                if(!in_array($_FILES['image']['type'], $format_allowed)) {
+                    $errors['image'] = 'Image format not supported, only png, jpg, and webp allowed';
+                } else {
+                    $folder = 'uploads/';
+
+                    $file_extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+
+                    $uploadFileName = generateUniqueFileName($file_extension);
+                
+                    $uploadFilePath = $folder . $uploadFileName;
+
+                    if(!file_exists($folder)) {
+                        mkdir($folder, true);
+                    }
+
+                    var_dump($destination);
+                    move_uploaded_file($_FILES['image']['tmp_name'], $uploadFilePath);
+                    resize_image($uploadFilePath);
+                }
+            }
             if(empty($errors)) {
                 // save to db 
                 $data = [];
-                $data['username'] = $_POST['username'];
-                $data['email'] = $_POST['email'];
-                $data['role'] = $row['role'];
-                $data['id'] = $id;
-    
-                if(empty($_POST['password'])) {
-                  $query = "update users set username = :username, email = :email, role =:role where id = :id limit 1";  
-                } else {
-                  $data['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                  $query = "update users set username = :username, email = :email, password =:password, role =:role where id = :id limit 1";
-    
+                $data['username']   = $_POST['username'];
+                $data['email']      = $_POST['email'];
+                $data['role']       = $_POST['role'];
+                $data['id']         = $id;
+
+                $password_str       = "";
+                $image_str          = "";
+
+                if(!empty($_POST['password'])) {
+                    $data['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                    $password_str = "password = : password";
                 }
+
+                if(!empty($uploadFilePath)){
+                    $image_str      = "image = :image, ";
+                    $data['image']  = $uploadFilePath;
+                }
+
+                $query = "update users set username = :username, email = :email, $password_str $image_str role = :role where id = :id limit 1";
     
                 query($query, $data);
                 redirect('admin/users');

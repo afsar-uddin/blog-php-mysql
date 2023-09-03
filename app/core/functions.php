@@ -1,5 +1,106 @@
 <?php
 
+/**select role */
+function old_select($key, $value, $default = '') {
+	if(!empty($_POST[$key]) && $_POST[$key] == $value)
+		return " selected ";
+	
+	if($default == $value)
+		return " selected ";
+	
+	return "";
+}
+
+/**generate unique file name */
+function generateUniqueFileName($extension) {
+    $timestamp = time();
+    $randomString = bin2hex(random_bytes(4));
+    $fileName = $timestamp . '_' . $randomString . '.' . $extension;
+    return $fileName;
+}
+
+
+/**file size format */
+function resize_image($filename, $max_size = 1000) {
+	
+	if(file_exists($filename))
+	{
+		$type = mime_content_type($filename);
+		switch ($type) {
+			case 'image/jpeg':
+				$image = imagecreatefromjpeg($filename);
+				break;
+			case 'image/png':
+				$image = imagecreatefrompng($filename);
+				break;
+			case 'image/gif':
+				$image = imagecreatefromgif($filename);
+				break;
+			case 'image/webp':
+				$image = imagecreatefromwebp($filename);
+				break;
+			default:
+				return;
+				break;
+		}
+
+		$src_width 	= imagesx($image);
+		$src_height = imagesy($image);
+
+		if($src_width > $src_height)
+		{
+			if($src_width < $max_size)
+			{
+				$max_size = $src_width;
+			}
+
+			$dst_width 	= $max_size;
+			$dst_height = ($src_height / $src_width) * $max_size;
+		}else{
+			
+			if($src_height < $max_size)
+			{
+				$max_size = $src_height;
+			}
+
+			$dst_height = $max_size;
+			$dst_width 	= ($src_width / $src_height) * $max_size;
+		}
+
+		$dst_height = round($dst_height);
+		$dst_width 	= round($dst_width);
+
+		$dst_image = imagecreatetruecolor($dst_width, $dst_height);
+		imagecopyresampled($dst_image, $image, 0, 0, 0, 0, $dst_width, $dst_height, $src_width, $src_height);
+		
+		switch ($type) {
+			case 'image/jpeg':
+				imagejpeg($dst_image, $filename, 90);
+				break;
+			case 'image/png':
+				imagepng($dst_image, $filename, 90);
+				break;
+			case 'image/gif':
+				imagegif($dst_image, $filename, 90);
+				break;
+			case 'image/webp':
+				imagewebp($dst_image, $filename, 90);
+				break;
+		}
+	}
+}
+
+/**get image from root folder */
+function get_image($file) {
+    $file = $file ?? '';
+
+    if(file_exists($file)) {
+        return ROOT . '/' . $file;
+    }
+
+    return ROOT . '/assets/img/no_image.png';
+}
+
 /**clean html load */
 function esc($str) {
     return htmlspecialchars($str ?? '');

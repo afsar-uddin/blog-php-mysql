@@ -28,7 +28,7 @@
 </div>
 <?php elseif($action == "edit"): ?>
     <div class="col-md-6 mx-auto add-users"> 
-        <form method="post" class="form">
+        <form method="post" class="form" enctype="multipart/form-data">
             <h4>Edit Account</h4>
             
             <?php //var_dump($row); ?>
@@ -38,6 +38,22 @@
             <?php if(!empty($errors)): ?>
                 <div style="color: red" class="bg-warning">Please fixed the error bellow</div>
             <?php endif; ?>
+
+            <div class="my-2">
+                <label>
+                    <img class="image-preview-edit" src="<?=get_image($row['image'])?>"style="width: 150px; height: 150px; boject-fit:cover">
+                    <input onchange="display_image_edit(this.files[0])" type="file" name="image" class="d-none">
+                </label>
+                <?php if(!empty($errors['image'])):?>
+			      <div class="text-danger"><?=$errors['image']?></div>
+			    <?php endif;?>
+            </div>
+
+            <script>
+                function display_image_edit(file) {
+                    document.querySelector('.image-preview-edit').src = URL.createObjectURL(file);
+                }
+            </script>
             
             <input class="form-control"  type="text" name="username" placeholder="Username" value="<?=old_value('username', $row['username'])?>"> <br />
             <?php if(!empty($errors['username'])): ?>
@@ -47,6 +63,15 @@
             <?php if(!empty($errors['email'])): ?>
                 <div style="color: red"><?=$errors['email'];?></div>
             <?php endif; ?>
+
+            <div class="my-3">
+                <label for="floatingInput">Role</label>
+                <select name="role" class="form-select">
+                    <option <?=old_select('role','user',$row['role'])?> value="user">User</option>
+                    <option <?=old_select('role','admin',$row['role'])?> value="admin">Admin</option>
+                </select>
+		    </div>
+
             <input class="form-control"  type="text" name="password" placeholder="Password (Leav empty to keep old)" value="<?=old_value('password')?>"> <br />
             <?php if(!empty($errors['password'])): ?>
                 <div style="color: red"><?=$errors['password'];?></div>
@@ -119,7 +144,10 @@
                     <td><?=esc($row['username'])?></td>
                     <td><?=$row['email']?></td>
                     <td><?=$row['role']?></td>
-                    <td>Image</td>
+                    <td>
+                        <?php //var_dump(get_image($row['image'])); ?>
+                        <img src="<?=get_image($row['image'])?>"style="width: 50px; height: 50px; boject-fit:cover">
+                    </td>
                     <td><?=date("jS M, Y", strtotime($row['date']))?></td>
                     <td>
                         <a href="<?=ROOT?>/admin/users/edit/<?=$row['id']?>">
