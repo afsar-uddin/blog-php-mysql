@@ -33,15 +33,43 @@
             $errors['password'] = 'Password do not matched';
         }
 
+        /**validate image */
+        $format_allowed = ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'];
+        if(!empty($_FILES['image']['name'])) {
+            $destination = '';
+            if(!in_array($_FILES['image']['type'], $format_allowed)) {
+                $errors['image'] = 'Image format not supported, only png, jpg, and webp allowed';
+            } else {
+                $folder = 'uploads/';
+
+                $file_extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+
+                $uploadFileName = generateUniqueFileName($file_extension);
+            
+                $uploadFilePath = $folder . $uploadFileName;
+
+                if(!file_exists($folder)) {
+                    mkdir($folder, true);
+                }
+
+                move_uploaded_file($_FILES['image']['tmp_name'], $uploadFilePath);
+                resize_image($uploadFilePath);
+            }
+        }
+
         if(empty($errors)) {
             // save to db 
             $data = [];
             $data['username'] = $_POST['username'];
             $data['email'] = $_POST['email'];
-            $data['role'] = "user";
+            $data['role'] = $_POST['role'];
             $data['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-            $query = "insert into users (username,email,password,role) values (:username,:email,:password,:role)";
+            
+            if(!empty($uploadFilePath)) {
+                $data['image'] = $uploadFilePath;
+                $query = "insert into users (username,email,password,role,image) values (:username,:email,:password,:role,:image)";
+            }
+            
             query($query, $data);
 
             redirect('admin/users');
@@ -110,7 +138,7 @@
                         mkdir($folder, true);
                     }
 
-                    var_dump($destination);
+                    // var_dump($destination);
                     move_uploaded_file($_FILES['image']['tmp_name'], $uploadFilePath);
                     resize_image($uploadFilePath);
                 }

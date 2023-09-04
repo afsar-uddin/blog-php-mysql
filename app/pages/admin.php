@@ -6,8 +6,6 @@
     $section  = $url[1] ?? 'dashboard';
     $action   = $url[2] ?? 'view';
     $id       = $url[3] ?? 0;
-
-    var_dump($id);
     
     $filename = "../app/pages/admin/".$section.".php";
 

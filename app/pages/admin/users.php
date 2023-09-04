@@ -1,23 +1,55 @@
 <?php if($action == "add"): ?>
 <div class="col-md-6 mx-auto add-users"> 
-    <form method="post" class="form">
+    <form method="post" class="form" enctype="multipart/form-data">
         <h4>Add new account</h4>
         <?php if(!empty($errors)): ?>
             <div style="color: red" class="bg-warning">Please fixed the error bellow</div>
         <?php endif; ?>
-        
+
+        <div class="my-2">
+            <label>
+                <img class="image-preview-edit" src="<?=get_image('')?>"style="width: 150px; height: 150px; boject-fit:cover">
+                <input onchange="display_image_edit(this.files[0])" type="file" name="image" class="d-none">
+            </label>
+            <?php if(!empty($errors['image'])):?>
+                <div class="text-danger"><?=$errors['image']?></div>
+            <?php endif;?>
+        </div>
+
+        <script>
+            function display_image_edit(file) {
+                document.querySelector('.image-preview-edit').src = URL.createObjectURL(file);
+            }
+        </script>
+
         <input class="form-control"  type="text" name="username" placeholder="Username" value="<?=old_value('username')?>"> <br />
         <?php if(!empty($errors['username'])): ?>
             <div style="color: red"><?=$errors['username'];?></div>
         <?php endif; ?>
+        
         <input class="form-control"  type="email" name="email" placeholder="Email" value="<?=old_value('email')?>"> <br />
+        
         <?php if(!empty($errors['email'])): ?>
             <div style="color: red"><?=$errors['email'];?></div>
         <?php endif; ?>
+
+        <div class="my-1">
+            <label for="floatingInput">Role</label>
+            <select name="role" class="form-select">
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+
+        <?php if(!empty($errors['role'])):?>
+            <div class="text-danger"><?=$errors['role']?></div>
+        <?php endif;?>
+
         <input class="form-control"  type="text" name="password" placeholder="Password" value="<?=old_value('password')?>"> <br />
         <?php if(!empty($errors['password'])): ?>
             <div style="color: red"><?=$errors['password'];?></div>
         <?php endif; ?>
+        
         <input class="form-control"  type="text" name="cpassword" placeholder="Confirm Password" value="<?=old_value('cpassword')?>"> <br />
         <?php if(!empty($errors['cpassword'])): ?>
             <div style="color: red"><?=$errors['cpassword'];?></div>
