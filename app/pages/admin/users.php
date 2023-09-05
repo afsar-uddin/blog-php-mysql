@@ -166,7 +166,10 @@
             <th>Action</th>
         </tr>
         <?php
-            $query = "select * from users order by id desc";
+            $limit = 3;
+            $offest = ($PGE_NUM['page_number'] - 1) * $limit;
+
+            $query = "select * from users order by id desc limit $limit offset $offest";
             $rows = query($query);
         ?>
         <?php if(!empty($rows)) : ?>
@@ -193,5 +196,10 @@
             <?php endforeach; ?>
         <?php endif; ?>
     </table>
+    <div class="col-md-12">
+        <a href="<?=$PGE_NUM['first_link']; ?>">First Page</a>
+        <a href="<?=$PGE_NUM['prev_link']; ?>">Prev Page</a>
+        <a href="<?=$PGE_NUM['next_link']; ?>">Next Page</a>
+    </div>
 </div>
 <?php endif; ?>
