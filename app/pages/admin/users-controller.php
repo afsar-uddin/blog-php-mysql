@@ -197,6 +197,10 @@
 
                 $query = "delete from users where id = :id limit 1";
                 query($query, $data);
+
+                if(file_exists($row['image']))
+                    unlink($row['image']);
+                    
                 redirect('admin/users');
                 
             }
