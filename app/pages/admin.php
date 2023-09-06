@@ -170,6 +170,8 @@
       </div>
 
       <div class="content-area">
+
+      <?php var_dump($filename); ?>
         <?php  require_once $filename; ?>
       </div>
 

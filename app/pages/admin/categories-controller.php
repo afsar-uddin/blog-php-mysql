@@ -21,8 +21,6 @@
         if($slug_row) {
             $slug .= rand(1000, 9999);
         }
-
-        var_dump($_POST);
         
 
         if(empty($errors)) {

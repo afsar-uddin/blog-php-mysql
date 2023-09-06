@@ -11,6 +11,8 @@ $url = explode('/', $url);
 $page_name = trim($url[0]);
 $filename = "../app/pages/".$page_name.'.php';
 
+// var_dump($filename); die;
+
 /** Pagination */
 $PGE_NUM = get_pagination_var();
 

@@ -187,6 +187,17 @@ function authenticate($row) {
     $_SESSION['USER'] = $row;
 }
 
+/** Get specific logged in user */
+function user($key = '') {
+    if(empty($key))
+        return $_SESSION['USER'];
+
+    if(!empty($_SESSION['USER'][$key]))
+        return $_SESSION['USER'][$key];
+
+    return '';
+}
+
 /** Session for logged in users */
 function logged_in() {
    if(!empty($_SESSION['USER']))
