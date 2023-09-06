@@ -137,25 +137,25 @@
       <div class="position-sticky pt-3 sidebar-sticky">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="<?=ROOT?>/admin">
+            <a class="nav-link <?=$section == 'dashboard' ? 'active' : '' ?>" aria-current="page" href="<?=ROOT?>/admin">
               <span data-feather="home" class="align-text-bottom"></span>
               Dashboard
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?=ROOT?>/admin/users">
+            <a class="nav-link <?=$section == 'users' ? 'active' : '' ?>" href="<?=ROOT?>/admin/users">
               <span data-feather="file" class="align-text-bottom"></span>
               Users
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?=ROOT?>/admin/categories">
+            <a class="nav-link <?=$section == 'categories' ? 'active' : '' ?>" href="<?=ROOT?>/admin/categories">
               <span data-feather="file" class="align-text-bottom"></span>
               Categories
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?=ROOT?>/admin/posts">
+            <a class="nav-link <?=$section == 'posts' ? 'active' : '' ?>" href="<?=ROOT?>/admin/posts">
               <span data-feather="file" class="align-text-bottom"></span>
               Posts
             </a>
